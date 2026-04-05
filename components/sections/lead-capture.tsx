@@ -3,7 +3,6 @@
 import { useState, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CTAButton } from '@/components/ui/cta-button';
-import { timePreferences } from '@/lib/data';
 import { useScrollAnimation } from '@/lib/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 
@@ -11,6 +10,10 @@ interface FormData {
   firstName: string;
   phone: string;
   postcode: string;
+  houseNumber: string;
+  email: string;
+  isHomeowner: boolean | null;
+  monthlyBill: string;
   timePreference: string;
 }
 
@@ -18,8 +21,25 @@ interface FormErrors {
   firstName?: string;
   phone?: string;
   postcode?: string;
+  isHomeowner?: string;
+  monthlyBill?: string;
   timePreference?: string;
 }
+
+const billOptions = [
+  { value: 'under-50', label: 'Under £50' },
+  { value: '50-100', label: '£50–£100' },
+  { value: '100-150', label: '£100–£150' },
+  { value: '150-200', label: '£150–£200' },
+  { value: '200-300', label: '£200–£300' },
+  { value: 'over-300', label: 'Over £300' },
+];
+
+const timeOptions = [
+  { value: 'morning', label: 'Morning' },
+  { value: 'afternoon', label: 'Afternoon' },
+  { value: 'evening', label: 'Evening' },
+];
 
 export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) {
   const { ref: animRef, animate, variants } = useScrollAnimation();
@@ -27,6 +47,10 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
     firstName: '',
     phone: '',
     postcode: '',
+    houseNumber: '',
+    email: '',
+    isHomeowner: null,
+    monthlyBill: '',
     timePreference: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -66,6 +90,14 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
       newErrors.postcode = 'Please enter a valid UK postcode';
     }
 
+    if (formData.isHomeowner === null) {
+      newErrors.isHomeowner = 'Please tell us if you own your home';
+    }
+
+    if (!formData.monthlyBill) {
+      newErrors.monthlyBill = 'Please select your monthly bill';
+    }
+
     if (!formData.timePreference) {
       newErrors.timePreference = 'Please select a preferred time';
     }
@@ -87,12 +119,16 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
     setIsSubmitting(false);
     setIsSuccess(true);
 
-    // Reset form after 3 seconds
+    // Reset form after 5 seconds
     setTimeout(() => {
       setFormData({
         firstName: '',
         phone: '',
         postcode: '',
+        houseNumber: '',
+        email: '',
+        isHomeowner: null,
+        monthlyBill: '',
         timePreference: '',
       });
       setIsSuccess(false);
@@ -107,6 +143,13 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
     // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleHomeownerSelect = (isOwner: boolean) => {
+    setFormData((prev) => ({ ...prev, isHomeowner: isOwner }));
+    if (errors.isHomeowner) {
+      setErrors((prev) => ({ ...prev, isHomeowner: undefined }));
     }
   };
 
@@ -174,7 +217,7 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
                     htmlFor="firstName"
                     className="block text-sm font-medium text-navy"
                   >
-                    First name
+                    First name <span className="text-destructive">*</span>
                   </label>
                   <input
                     type="text"
@@ -207,7 +250,7 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
                     htmlFor="phone"
                     className="block text-sm font-medium text-navy"
                   >
-                    Phone number
+                    Phone number <span className="text-destructive">*</span>
                   </label>
                   <input
                     type="tel"
@@ -235,7 +278,7 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
                     htmlFor="postcode"
                     className="block text-sm font-medium text-navy"
                   >
-                    Postcode
+                    Postcode <span className="text-destructive">*</span>
                   </label>
                   <input
                     type="text"
@@ -262,85 +305,225 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
                   )}
                 </div>
 
-                {/* Time Preference */}
+                {/* House Number */}
                 <div>
                   <label
-                    htmlFor="timePreference"
+                    htmlFor="houseNumber"
                     className="block text-sm font-medium text-navy"
                   >
-                    Best time to call
+                    House number (optional) — helps us assess your roof remotely
                   </label>
-                  <select
-                    id="timePreference"
-                    name="timePreference"
-                    value={formData.timePreference}
+                  <input
+                    type="text"
+                    id="houseNumber"
+                    name="houseNumber"
+                    value={formData.houseNumber}
                     onChange={handleChange}
-                    className={cn(
-                      'mt-2 w-full rounded-lg border bg-background px-4 py-3 text-foreground focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/20',
-                      errors.timePreference
-                        ? 'border-destructive'
-                        : 'border-input',
-                      !formData.timePreference && 'text-muted-foreground'
-                    )}
-                    aria-describedby={
-                      errors.timePreference ? 'timePreference-error' : undefined
-                    }
+                    placeholder="42"
+                    className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/20"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-navy"
                   >
-                    <option value="">Select a time</option>
-                    {timePreferences.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.timePreference && (
-                    <p
-                      id="timePreference-error"
-                      className="mt-1 text-sm text-destructive"
+                    Email (optional)
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="john@example.com"
+                    className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/20"
+                  />
+                </div>
+
+                {/* Homeowner Question */}
+                <div>
+                  <label className="block text-sm font-medium text-navy">
+                    Do you own your home? <span className="text-destructive">*</span>
+                  </label>
+                  <div className="mt-2 grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleHomeownerSelect(true)}
+                      className={cn(
+                        'rounded-lg border-2 px-4 py-4 text-sm font-medium transition-all',
+                        formData.isHomeowner === true
+                          ? 'border-amber bg-amber/10 text-navy'
+                          : 'border-input bg-background text-foreground hover:border-amber/50'
+                      )}
                     >
-                      {errors.timePreference}
+                      Yes, I own my home
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleHomeownerSelect(false)}
+                      className={cn(
+                        'rounded-lg border-2 px-4 py-4 text-sm font-medium transition-all',
+                        formData.isHomeowner === false
+                          ? 'border-amber bg-amber/10 text-navy'
+                          : 'border-input bg-background text-foreground hover:border-amber/50'
+                      )}
+                    >
+                      No, I rent
+                    </button>
+                  </div>
+                  {errors.isHomeowner && (
+                    <p className="mt-1 text-sm text-destructive">
+                      {errors.isHomeowner}
                     </p>
                   )}
                 </div>
 
-                {/* Submit Button - CTA #7 */}
-                <CTAButton
-                  type="submit"
-                  fullWidth
-                  disabled={isSubmitting}
-                  className="mt-8"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <svg
-                        className="h-5 w-5 animate-spin"
-                        viewBox="0 0 24 24"
-                        fill="none"
+                {/* Renter Message */}
+                {formData.isHomeowner === false && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="rounded-lg bg-muted p-4 text-center"
+                  >
+                    <p className="text-sm text-muted-foreground">
+                      We can only install on owned properties. Call us free on{' '}
+                      <a href="tel:08001234567" className="font-semibold text-navy hover:underline">
+                        0800 123 4567
+                      </a>
+                      .
+                    </p>
+                  </motion.div>
+                )}
+
+                {/* Only show remaining fields if homeowner is true or null */}
+                {formData.isHomeowner !== false && (
+                  <>
+                    {/* Monthly Electricity Bill */}
+                    <div>
+                      <label
+                        htmlFor="monthlyBill"
+                        className="block text-sm font-medium text-navy"
                       >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
-                      </svg>
-                      Submitting...
-                    </span>
-                  ) : (
-                    'Send my free result by SMS'
-                  )}
-                </CTAButton>
+                        Monthly electricity bill <span className="text-destructive">*</span>
+                      </label>
+                      <select
+                        id="monthlyBill"
+                        name="monthlyBill"
+                        value={formData.monthlyBill}
+                        onChange={handleChange}
+                        className={cn(
+                          'mt-2 w-full rounded-lg border bg-background px-4 py-3 text-foreground focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/20',
+                          errors.monthlyBill
+                            ? 'border-destructive'
+                            : 'border-input',
+                          !formData.monthlyBill && 'text-muted-foreground'
+                        )}
+                        aria-describedby={
+                          errors.monthlyBill ? 'monthlyBill-error' : undefined
+                        }
+                      >
+                        <option value="">Select your monthly bill</option>
+                        {billOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.monthlyBill && (
+                        <p
+                          id="monthlyBill-error"
+                          className="mt-1 text-sm text-destructive"
+                        >
+                          {errors.monthlyBill}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Time Preference */}
+                    <div>
+                      <label
+                        htmlFor="timePreference"
+                        className="block text-sm font-medium text-navy"
+                      >
+                        Best time to call <span className="text-destructive">*</span>
+                      </label>
+                      <select
+                        id="timePreference"
+                        name="timePreference"
+                        value={formData.timePreference}
+                        onChange={handleChange}
+                        className={cn(
+                          'mt-2 w-full rounded-lg border bg-background px-4 py-3 text-foreground focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/20',
+                          errors.timePreference
+                            ? 'border-destructive'
+                            : 'border-input',
+                          !formData.timePreference && 'text-muted-foreground'
+                        )}
+                        aria-describedby={
+                          errors.timePreference ? 'timePreference-error' : undefined
+                        }
+                      >
+                        <option value="">Select a time</option>
+                        {timeOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.timePreference && (
+                        <p
+                          id="timePreference-error"
+                          className="mt-1 text-sm text-destructive"
+                        >
+                          {errors.timePreference}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Submit Button - CTA #7 */}
+                    <CTAButton
+                      type="submit"
+                      fullWidth
+                      disabled={isSubmitting}
+                      className="mt-8"
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <svg
+                            className="h-5 w-5 animate-spin"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            />
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            />
+                          </svg>
+                          Submitting...
+                        </span>
+                      ) : (
+                        'Send my free result by SMS'
+                      )}
+                    </CTAButton>
+                  </>
+                )}
 
                 {/* Privacy Note */}
                 <p className="text-center text-xs text-muted-foreground">
-                  🔒 Your details are safe. Results sent by SMS within minutes. We will never share your data or spam you.
+                  Your details are safe. Results sent by SMS within minutes. We will never share your data or spam you.
                 </p>
               </motion.form>
             )}
