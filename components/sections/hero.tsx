@@ -19,18 +19,45 @@ export function Hero({ onCTAClick }: HeroProps) {
 
   return (
     <section className="relative overflow-hidden py-16 md:py-24 lg:py-32">
-      {/* Background Image */}
+      {/* Background Image - Residential solar panels on rooftop */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop')",
         }}
       />
       {/* White gradient overlay for legibility - slightly more transparent to show solar panels */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/80 to-white/85" />
       {/* Subtle dark gradient at bottom edge for smooth transition to next section */}
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-gray-100/50 to-transparent" />
+
+      {/* Floating Social Proof Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}
+        className="absolute bottom-8 right-4 z-20 hidden rounded-xl bg-white/95 px-5 py-4 shadow-lg backdrop-blur-sm md:right-8 md:block lg:bottom-12 lg:right-12"
+      >
+        {/* 5 Star Rating */}
+        <div className="mb-2 flex gap-0.5">
+          {[...Array(5)].map((_, i) => (
+            <svg
+              key={i}
+              className="h-4 w-4 fill-amber text-amber"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          ))}
+        </div>
+        {/* Quote */}
+        <p className="text-sm font-medium text-navy">
+          &ldquo;Already saved £1,400 in my first year&rdquo;
+        </p>
+        {/* Attribution */}
+        <p className="mt-1 text-xs text-muted-foreground">Sarah T., Bristol</p>
+      </motion.div>
 
       <motion.div
         ref={ref as React.RefObject<HTMLDivElement>}
@@ -46,7 +73,7 @@ export function Hero({ onCTAClick }: HeroProps) {
         </div>
 
         {/* Headline */}
-        <h1 className="text-balance text-4xl font-semibold leading-tight text-navy md:text-5xl lg:text-6xl">
+        <h1 className="text-balance text-4xl font-bold leading-tight text-navy md:text-6xl lg:text-7xl xl:text-8xl">
           Stop paying energy bills that never stop rising
         </h1>
 
