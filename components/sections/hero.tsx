@@ -18,13 +18,13 @@ export function Hero({ onCTAClick }: HeroProps) {
   const { ref, animate, variants } = useScrollAnimation();
 
   return (
-    <section className="relative overflow-hidden py-16 md:py-24 lg:py-32">
+    <section className="relative overflow-hidden py-10 md:py-14 lg:py-16">
       {/* Background Image - Residential solar panels on rooftop */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop')",
         }}
       />
       {/* White gradient overlay for legibility - slightly more transparent to show solar panels */}
