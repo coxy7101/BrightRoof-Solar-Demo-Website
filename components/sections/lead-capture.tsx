@@ -14,7 +14,6 @@ interface FormData {
   email: string;
   isHomeowner: boolean | null;
   monthlyBill: string;
-  timePreference: string;
 }
 
 interface FormErrors {
@@ -23,7 +22,6 @@ interface FormErrors {
   postcode?: string;
   isHomeowner?: string;
   monthlyBill?: string;
-  timePreference?: string;
 }
 
 const billOptions = [
@@ -35,11 +33,7 @@ const billOptions = [
   { value: 'over-300', label: 'Over £300' },
 ];
 
-const timeOptions = [
-  { value: 'morning', label: 'Morning' },
-  { value: 'afternoon', label: 'Afternoon' },
-  { value: 'evening', label: 'Evening' },
-];
+
 
 export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) {
   const { ref: animRef, animate, variants } = useScrollAnimation();
@@ -51,7 +45,6 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
     email: '',
     isHomeowner: null,
     monthlyBill: '',
-    timePreference: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -98,10 +91,6 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
       newErrors.monthlyBill = 'Please select your monthly bill';
     }
 
-    if (!formData.timePreference) {
-      newErrors.timePreference = 'Please select a preferred time';
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -129,7 +118,6 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
         email: '',
         isHomeowner: null,
         monthlyBill: '',
-        timePreference: '',
       });
       setIsSuccess(false);
     }, 5000);
@@ -439,47 +427,6 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
                           className="mt-1 text-sm text-destructive"
                         >
                           {errors.monthlyBill}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Time Preference */}
-                    <div>
-                      <label
-                        htmlFor="timePreference"
-                        className="block text-sm font-medium text-navy"
-                      >
-                        Best time to call <span className="text-destructive">*</span>
-                      </label>
-                      <select
-                        id="timePreference"
-                        name="timePreference"
-                        value={formData.timePreference}
-                        onChange={handleChange}
-                        className={cn(
-                          'mt-2 w-full rounded-lg border bg-background px-4 py-3 text-foreground focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/20',
-                          errors.timePreference
-                            ? 'border-destructive'
-                            : 'border-input',
-                          !formData.timePreference && 'text-muted-foreground'
-                        )}
-                        aria-describedby={
-                          errors.timePreference ? 'timePreference-error' : undefined
-                        }
-                      >
-                        <option value="">Select a time</option>
-                        {timeOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.timePreference && (
-                        <p
-                          id="timePreference-error"
-                          className="mt-1 text-sm text-destructive"
-                        >
-                          {errors.timePreference}
                         </p>
                       )}
                     </div>
