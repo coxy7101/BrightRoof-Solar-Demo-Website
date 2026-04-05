@@ -24,7 +24,7 @@ export function Hero({ onCTAClick }: HeroProps) {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2072&auto=format&fit=crop')",
         }}
       />
       {/* White gradient overlay for legibility - slightly more transparent to show solar panels */}
