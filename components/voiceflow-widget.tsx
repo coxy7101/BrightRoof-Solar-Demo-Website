@@ -50,6 +50,12 @@ export function VoiceflowWidget() {
           right: 20px !important;
         }
         
+        @media (max-width: 767px) {
+          .voiceflow-bubble {
+            bottom: 90px !important;
+          }
+        }
+        
         .voiceflow-bubble button {
           width: 65px !important;
           height: 65px !important;
