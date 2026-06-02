@@ -44,19 +44,32 @@ export function VoiceflowWidget() {
       {/* Voiceflow widget button size customization */}
       <style>{`
         .voiceflow-bubble {
-          width: 70px !important;
-          height: 70px !important;
+          width: 65px !important;
+          height: 65px !important;
+          bottom: 20px !important;
+          right: 20px !important;
         }
         
         .voiceflow-bubble button {
-          width: 70px !important;
-          height: 70px !important;
+          width: 65px !important;
+          height: 65px !important;
           border-radius: 50% !important;
+          padding: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
         }
 
         .voiceflow-bubble button svg {
-          width: 32px !important;
-          height: 32px !important;
+          width: 40px !important;
+          height: 40px !important;
+          min-width: 40px !important;
+          min-height: 40px !important;
+        }
+
+        .voiceflow-bubble button img {
+          width: 40px !important;
+          height: 40px !important;
         }
       `}</style>
 
