@@ -71,11 +71,21 @@ export function VoiceflowWidget() {
           width: 40px !important;
           height: 40px !important;
         }
+
+        .voiceflow-proactive-bubble {
+          display: none;
+        }
+
+        @media (min-width: 768px) {
+          .voiceflow-proactive-bubble {
+            display: block;
+          }
+        }
       `}</style>
 
       {/* Proactive message bubble */}
       {showBubble && (
-        <div className="fixed bottom-24 right-6 z-40 animate-in fade-in slide-in-from-bottom-2 duration-300">
+        <div className="voiceflow-proactive-bubble fixed bottom-24 right-6 z-40 animate-in fade-in slide-in-from-bottom-2 duration-300">
           <div className="bg-amber-400 text-navy-dark rounded-lg shadow-lg p-4 pr-10 max-w-xs relative">
             <button
               onClick={() => setShowBubble(false)}
