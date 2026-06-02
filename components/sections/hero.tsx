@@ -18,7 +18,7 @@ export function Hero({ onCTAClick }: HeroProps) {
   const { ref, animate, variants } = useScrollAnimation();
 
   return (
-    <section className="relative overflow-hidden min-h-screen md:min-h-0 flex items-center md:block py-12 md:py-14 lg:py-16">
+    <section className="relative overflow-hidden min-h-[auto] md:min-h-screen flex items-center md:block py-12 md:py-14 lg:py-16">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"

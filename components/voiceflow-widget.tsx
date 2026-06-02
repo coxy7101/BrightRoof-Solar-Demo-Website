@@ -83,6 +83,7 @@ export function VoiceflowWidget() {
           display: none;
         }
 
+        /* Show on md and up */
         @media (min-width: 768px) {
           .voiceflow-proactive-bubble {
             display: block;
@@ -93,15 +94,15 @@ export function VoiceflowWidget() {
       {/* Proactive message bubble */}
       {showBubble && (
         <div className="voiceflow-proactive-bubble fixed bottom-24 right-6 z-40 animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <div className="bg-amber-400 text-navy-dark rounded-lg shadow-lg p-4 pr-10 max-w-xs relative">
+          <div className="bg-amber text-navy rounded-lg shadow-lg p-4 pr-10 max-w-xs relative">
             <button
               onClick={() => setShowBubble(false)}
-              className="absolute top-2 right-2 p-1 hover:bg-amber-500 rounded transition-colors"
+              className="absolute top-2 right-2 p-1 hover:bg-amber-hover rounded transition-colors"
               aria-label="Close message"
             >
-              <X size={18} className="text-navy-dark" />
+              <X size={18} className="text-navy" />
             </button>
-            <p className="text-sm font-medium text-navy-dark leading-relaxed">
+            <p className="text-sm font-medium text-navy leading-relaxed">
               👋 Find out if your home qualifies for solar — takes 2 minutes!
             </p>
           </div>
