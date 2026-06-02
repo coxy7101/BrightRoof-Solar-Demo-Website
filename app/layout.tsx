@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import Script from 'next/script'
+import { VoiceflowWidget } from '@/components/voiceflow-widget'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -42,28 +42,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
-        <Script
-          id="voiceflow-widget"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(d, t) {
-                var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-                v.onload = function() {
-                  window.voiceflow.chat.load({
-                    verify: { projectID: '6a1e7dbd230d270069c299c7' },
-                    url: 'https://general-runtime.voiceflow.com',
-                    versionID: 'production',
-                    voice: {
-                      url: "https://runtime-api.voiceflow.com"
-                    }
-                  });
-                }
-                v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-              })(document, 'script');
-            `,
-          }}
-        />
+        <VoiceflowWidget />
       </body>
     </html>
   )
