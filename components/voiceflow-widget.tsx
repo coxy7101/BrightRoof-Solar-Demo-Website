@@ -49,13 +49,14 @@ export function VoiceflowWidget() {
           bottom: 20px !important;
           right: 20px !important;
         }
-        
-        @media (max-width: 767px) {
+
+        /* On mobile, lift the widget button above the sticky bottom bar (~52px tall) */
+        @media (max-width: 1023px) {
           .voiceflow-bubble {
-            bottom: 90px !important;
+            bottom: 72px !important;
           }
         }
-        
+
         .voiceflow-bubble button {
           width: 65px !important;
           height: 65px !important;

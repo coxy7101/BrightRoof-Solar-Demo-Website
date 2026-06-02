@@ -106,4 +106,12 @@
   body {
     @apply bg-background text-foreground overflow-x-hidden;
   }
+  /* Prevent any block from causing horizontal scroll on mobile */
+  section,
+  header,
+  footer,
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
 }

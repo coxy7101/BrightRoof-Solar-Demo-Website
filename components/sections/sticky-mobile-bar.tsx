@@ -43,9 +43,9 @@ export function StickyMobileBar({ onCTAClick, formRef }: StickyMobileBarProps) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background py-2.5 px-4 shadow-lg lg:hidden"
+          className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background py-2 px-4 shadow-lg lg:hidden"
         >
-          <div className="mx-auto flex max-w-md items-center justify-between gap-4">
+          <div className="mx-auto flex max-w-md items-center justify-between gap-3">
             {/* Phone */}
             <a
               href={`tel:${companyInfo.phone.replace(/\s/g, '')}`}
@@ -69,7 +69,7 @@ export function StickyMobileBar({ onCTAClick, formRef }: StickyMobileBarProps) {
             {/* CTA - CTA #5 */}
             <CTAButton
               onClick={onCTAClick}
-              className="flex-1 md:flex-none md:min-w-0 md:w-auto"
+              className="flex-1 md:flex-none md:min-w-0 md:w-auto text-sm px-4 py-2"
             >
               Get my free result
             </CTAButton>

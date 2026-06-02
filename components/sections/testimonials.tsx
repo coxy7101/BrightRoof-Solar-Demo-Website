@@ -10,7 +10,7 @@ export function Testimonials() {
   const { ref, animate, variants } = useScrollAnimation();
 
   return (
-    <section className="bg-secondary py-16 md:py-24">
+    <section className="bg-secondary py-12 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -20,14 +20,14 @@ export function Testimonials() {
           variants={variants}
           className="text-center"
         >
-          <h2 className="text-balance text-3xl font-semibold text-navy md:text-4xl">
+          <h2 className="text-balance text-2xl font-semibold text-navy sm:text-3xl md:text-4xl">
             Trusted by {companyInfo.stats.homesPowered} UK Homeowners
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-2xl text-pretty text-base text-muted-foreground sm:mt-4 md:text-lg">
             Don&apos;t just take our word for it. Here&apos;s what our customers
             have to say.
           </p>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-3 flex justify-center sm:mt-4">
             <TrustpilotBadge
               rating={companyInfo.stats.rating}
               reviewCount={companyInfo.stats.reviewCount}
@@ -36,7 +36,7 @@ export function Testimonials() {
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6 md:mt-12 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard
               key={testimonial.id}

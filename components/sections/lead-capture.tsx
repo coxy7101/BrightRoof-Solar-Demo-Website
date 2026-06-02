@@ -142,21 +142,21 @@ export const LeadCapture = forwardRef<HTMLElement>(function LeadCapture(_, ref) 
   };
 
   return (
-    <section ref={ref} className="bg-background py-16 md:py-24" id="lead-form">
+    <section ref={ref} className="bg-background pb-24 pt-12 md:py-24 lg:pb-24" id="lead-form">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={animRef as React.RefObject<HTMLDivElement>}
           initial="hidden"
           animate={animate}
           variants={variants}
-          className="rounded-2xl border border-border bg-card p-8 shadow-lg md:p-12"
+          className="rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8 md:p-12"
         >
           {/* Header */}
           <div className="text-center">
-            <h2 className="text-balance text-3xl font-semibold text-navy md:text-4xl">
+            <h2 className="text-balance text-2xl font-semibold text-navy sm:text-3xl md:text-4xl">
               Get your free solar eligibility result
             </h2>
-            <p className="mt-4 text-muted-foreground">
+            <p className="mt-3 text-sm text-muted-foreground sm:mt-4 sm:text-base">
               Tell us a little about your home and energy use. We&apos;ll send your personalised eligibility result and savings estimate straight to your phone within minutes. If your home looks like a great fit, one of our advisors may give you a quick call to talk you through your options — no pressure, no obligation.
             </p>
           </div>

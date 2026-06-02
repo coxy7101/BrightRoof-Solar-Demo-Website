@@ -20,7 +20,7 @@ export function FAQ({ onCTAClick }: FAQProps) {
   };
 
   return (
-    <section className="bg-secondary py-16 md:py-24">
+    <section className="bg-secondary py-12 md:py-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -30,17 +30,17 @@ export function FAQ({ onCTAClick }: FAQProps) {
           variants={variants}
           className="text-center"
         >
-          <h2 className="text-balance text-3xl font-semibold text-navy md:text-4xl">
+          <h2 className="text-balance text-2xl font-semibold text-navy sm:text-3xl md:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-2xl text-pretty text-base text-muted-foreground sm:mt-4 md:text-lg">
             Got questions? We&apos;ve got answers. If you can&apos;t find what
             you&apos;re looking for, give us a call.
           </p>
         </motion.div>
 
         {/* FAQ Accordion */}
-        <div className="mt-12 space-y-4">
+        <div className="mt-8 space-y-3 md:mt-12 md:space-y-4">
           {faqs.map((faq, index) => (
             <FAQItem
               key={faq.id}
@@ -57,7 +57,7 @@ export function FAQ({ onCTAClick }: FAQProps) {
           initial="hidden"
           animate={animate}
           variants={variants}
-          className="mt-12 text-center"
+          className="mt-10 text-center md:mt-12"
         >
           <p className="mb-4 text-muted-foreground">Still have questions?</p>
           <CTAButton onClick={onCTAClick}>{"Get my free eligibility result \u2192"}</CTAButton>

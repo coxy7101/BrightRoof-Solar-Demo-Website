@@ -8,7 +8,7 @@ export function Guarantees() {
   const { ref, animate, variants } = useScrollAnimation();
 
   return (
-    <section className="bg-background py-16 md:py-24">
+    <section className="bg-background py-12 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -18,17 +18,17 @@ export function Guarantees() {
           variants={variants}
           className="text-center"
         >
-          <h2 className="text-balance text-3xl font-semibold text-navy md:text-4xl">
+          <h2 className="text-balance text-2xl font-semibold text-navy sm:text-3xl md:text-4xl">
             Our Guarantees to You
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-2xl text-pretty text-base text-muted-foreground sm:mt-4 md:text-lg">
             We stand behind our work with industry-leading warranties and
             guarantees.
           </p>
         </motion.div>
 
         {/* Guarantees Grid */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 md:mt-12 md:gap-6 lg:grid-cols-4">
           {guarantees.map((guarantee, index) => (
             <GuaranteeCard
               key={guarantee.id}
